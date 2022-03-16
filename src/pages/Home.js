@@ -1,35 +1,31 @@
 import useHttp from ".././hooks/use-http";
-import { useEffect, useState, useContext, useCallback, useMemo } from "react";
+import { useEffect, useState } from "react";
 import MovieList from "../components/MovieList";
 import SelectComponent from "../UI/SelectComponent";
 import classes from "./Home.module.css";
-import MovieContext from "../store/movie-context";
 
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import FormGroup from "@mui/material/FormGroup";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
 
 const Home = () => {
   const [genres, setGenres] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [audienceMovies, setAudienceMovies] = useState([]);
+  const [filter, setFilter] = useState("");
   const { isLoading, error, sendRequest } = useHttp();
 
-  const movieCtx = useContext(MovieContext);
-
-  /*   const applyMovies = useCallback(
-    (data) => {
-      movieCtx.setMovieList(data.results);
-      movieCtx.setFilteredList(data.results);
-    },
-    [movieCtx]
-  ); */
-
   const applyMovies = (data) => {
-    movieCtx.setMovieList(data.results);
-    movieCtx.setFilteredList(data.results);
+    setAllMovies(data.results);
+    setFilteredMovies(data.results);
+    setAudienceMovies(data.results);
   };
 
   const applyGenres = (data) => {
@@ -51,7 +47,34 @@ const Home = () => {
   }, [sendRequest]);
 
   const filterMovies = (event) => {
-    movieCtx.setFilterValue(event.target.value);
+    setFilter(event.target.value);
+  };
+
+  const filterMoviesByGenre = (genre) => {
+    const filteredGenres = allMovies.filter(
+      (f) => f.genre_ids.includes(genre) === true
+    );
+    setFilteredMovies(filteredGenres);
+    setAudienceMovies(filteredGenres);
+  };
+
+  const selectAudience = (event) => {
+    let filteredMoviesTemp = [];
+
+    switch (event.target.value) {
+      case "adults":
+        filteredMoviesTemp = filteredMovies.filter((m) => m.adult === true);
+        setAudienceMovies(filteredMoviesTemp);
+        return;
+      case "kids":
+        filteredMoviesTemp = filteredMovies.filter((m) => m.adult === false);
+        setAudienceMovies(filteredMoviesTemp);
+        return;
+      default:
+        setAudienceMovies(filteredMovies);
+        return;
+    }
+   
   };
 
   return (
@@ -82,14 +105,27 @@ const Home = () => {
           className={classes.selectCmp}
           filterName="Genres"
           items={genres ? genres : [{ name: "", value: "" }]}
+          filter={filter}
+          filterMovies={filterMoviesByGenre}
         ></SelectComponent>
       </div>
 
-      <FormGroup>
-        <FormControlLabel control={<Switch defaultChecked />} label="Adults" />
-      </FormGroup>
+      <FormControl>
+        <FormLabel id="demo-radio-buttons-group-label">Audience</FormLabel>
+        <RadioGroup
+          row
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="all"
+          name="radio-buttons-group"
+          onChange={selectAudience}
+        >
+          <FormControlLabel value="adults" control={<Radio />} label="Adults" />
+          <FormControlLabel value="kids" control={<Radio />} label="Kids" />
+          <FormControlLabel value="all" control={<Radio />} label="All" />
+        </RadioGroup>
+      </FormControl>
 
-      <MovieList></MovieList>
+      <MovieList movies={audienceMovies} filter={filter}></MovieList>
     </div>
   );
 };

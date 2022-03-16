@@ -4,17 +4,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useContext } from "react";
-import MovieContext from "../store/movie-context";
 
 const SelectComponent = (props) => {
-  const movieCtx = useContext(MovieContext);
-
+  
   const handleChange = (event) => {
-    movieCtx.setFilterValue(event.target.value);
-
-    const filteredGenres = movieCtx.movieList.filter((f) => (f.genre_ids.includes(event.target.value) === true));
-    movieCtx.setFilteredList(filteredGenres);
+    props.filterMovies(event.target.value);
   };
 
   return (
@@ -26,7 +20,7 @@ const SelectComponent = (props) => {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={movieCtx.filter}
+          value={props.filter}
           label={props.filterName}
           onChange={handleChange}
         >
