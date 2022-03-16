@@ -3,16 +3,8 @@ import { useEffect, useState } from "react";
 import MovieList from "../components/MovieList";
 import SelectComponent from "../UI/SelectComponent";
 import classes from "./Home.module.css";
-
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import RadioButtonGroup from "../UI/RadioButtonGroup";
+import SearchComponent from "../UI/SearchComponent";
 
 const Home = () => {
   const [genres, setGenres] = useState([]);
@@ -74,31 +66,14 @@ const Home = () => {
         setAudienceMovies(filteredMovies);
         return;
     }
-   
   };
 
   return (
     <div>
-      <Paper
-        component="form"
-        sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          width: 300,
-          marginTop: 2,
-        }}
-      >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Movie"
-          inputProps={{ "aria-label": "search google maps" }}
-          onChange={filterMovies}
-        />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
-      </Paper>
+      <SearchComponent
+        filterMovies={filterMovies}
+        placeholder={"Search Movie"}
+      ></SearchComponent>
 
       <div className={classes.box}>
         <SelectComponent
@@ -110,20 +85,16 @@ const Home = () => {
         ></SelectComponent>
       </div>
 
-      <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">Audience</FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="all"
-          name="radio-buttons-group"
-          onChange={selectAudience}
-        >
-          <FormControlLabel value="adults" control={<Radio />} label="Adults" />
-          <FormControlLabel value="kids" control={<Radio />} label="Kids" />
-          <FormControlLabel value="all" control={<Radio />} label="All" />
-        </RadioGroup>
-      </FormControl>
+      <RadioButtonGroup
+        selectAudience={selectAudience}
+        defaultValue={"all"}
+        groupName={"Audience"}
+        radioList={[
+          { value: "adults", label: "Adults" },
+          { value: "kids", label: "Kids" },
+          { value: "all", label: "all" },
+        ]}
+      ></RadioButtonGroup>
 
       <MovieList movies={audienceMovies} filter={filter}></MovieList>
     </div>
