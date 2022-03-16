@@ -19,18 +19,18 @@ const Home = () => {
 
   const movieCtx = useContext(MovieContext);
 
-  const applyMovies = useCallback(
+  /*   const applyMovies = useCallback(
     (data) => {
       movieCtx.setMovieList(data.results);
       movieCtx.setFilteredList(data.results);
     },
     [movieCtx]
-  );
+  ); */
 
-  /*  const applyMovies = (data) => {
+  const applyMovies = (data) => {
     movieCtx.setMovieList(data.results);
     movieCtx.setFilteredList(data.results);
-  }; */
+  };
 
   const applyGenres = (data) => {
     setGenres(data.genres);
@@ -41,7 +41,7 @@ const Home = () => {
       { url: "https://api.themoviedb.org/3/search/movie" },
       applyMovies
     );
-  }, [sendRequest, applyMovies]);
+  }, [sendRequest]);
 
   useEffect(() => {
     sendRequest(
