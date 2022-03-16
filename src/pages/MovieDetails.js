@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useHttp from ".././hooks/use-http";
-import classes from "./MovieDetails.module.css";
 
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';

@@ -12,6 +12,7 @@ const Home = () => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [audienceMovies, setAudienceMovies] = useState([]);
   const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
   const { isLoading, error, sendRequest } = useHttp();
 
   const applyMovies = (data) => {
@@ -39,13 +40,19 @@ const Home = () => {
   }, [sendRequest]);
 
   const filterMovies = (event) => {
-    setFilter(event.target.value);
+    setSearch(event.target.value);
   };
 
   const filterMoviesByGenre = (genre) => {
-    const filteredGenres = allMovies.filter(
-      (f) => f.genre_ids.includes(genre) === true
-    );
+    let filteredGenres = allMovies;
+
+    if (genre === "none") filteredGenres = allMovies;
+    else
+      filteredGenres = allMovies.filter(
+        (f) => f.genre_ids.includes(genre) === true
+      );
+
+    setFilter(genre);
     setFilteredMovies(filteredGenres);
     setAudienceMovies(filteredGenres);
   };
@@ -75,28 +82,32 @@ const Home = () => {
         placeholder={"Search Movie"}
       ></SearchComponent>
 
-      <div className={classes.box}>
-        <SelectComponent
-          className={classes.selectCmp}
-          filterName="Genres"
-          items={genres ? genres : [{ name: "", value: "" }]}
-          filter={filter}
-          filterMovies={filterMoviesByGenre}
-        ></SelectComponent>
+      <div className={classes.gridContainer}>
+        <div className={classes.gridItem}>
+          <SelectComponent
+            className={classes.selectCmp}
+            filterName="Genres"
+            items={genres ? genres : [{ name: "", value: "" }]}
+            filter={filter}
+            filterMovies={filterMoviesByGenre}
+          ></SelectComponent>
+        </div>
+
+        <div className={classes.gridItem}>
+          <RadioButtonGroup
+            selectAudience={selectAudience}
+            defaultValue={"all"}
+            groupName={"Audience"}
+            radioList={[
+              { value: "adults", label: "Adults" },
+              { value: "kids", label: "Kids" },
+              { value: "all", label: "all" },
+            ]}
+          ></RadioButtonGroup>
+        </div>
       </div>
 
-      <RadioButtonGroup
-        selectAudience={selectAudience}
-        defaultValue={"all"}
-        groupName={"Audience"}
-        radioList={[
-          { value: "adults", label: "Adults" },
-          { value: "kids", label: "Kids" },
-          { value: "all", label: "all" },
-        ]}
-      ></RadioButtonGroup>
-
-      <MovieList movies={audienceMovies} filter={filter}></MovieList>
+      <MovieList movies={audienceMovies} search={search}></MovieList>
     </div>
   );
 };

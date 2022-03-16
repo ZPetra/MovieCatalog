@@ -17,7 +17,7 @@ return (
     >
 
     {props.radioList.map(r => {
-        return <FormControlLabel value={r.value} control={<Radio />} label={r.label} />
+        return <FormControlLabel key={r.value} value={r.value} control={<Radio />} label={r.label} />
     })}
     </RadioGroup>
   </FormControl>

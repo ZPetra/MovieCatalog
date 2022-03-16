@@ -2,7 +2,6 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
-import classes from "./MovieItem.module.css";
 import { useNavigate } from "react-router-dom";
 
 const MovieItem = (props) => {

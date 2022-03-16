@@ -1,7 +1,16 @@
 .box {
-    margin: 20px 0;
-  }
-  
-  .selectCmp {
-    width: 400px;
-  }
+  margin: 20px 0;
+}
+
+.selectCmp {
+  width: 400px;
+}
+
+.gridContainer {
+  margin-top: 20px;
+  display: grid;
+  grid-auto-columns: 300px;
+  grid-template-columns: auto auto auto;
+  column-gap: 20px;
+}
+
