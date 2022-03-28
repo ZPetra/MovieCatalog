@@ -26,8 +26,12 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const pathname = window.location.pathname;
+
+    let url = "https://api.themoviedb.org/3/movie" + ((pathname !== "/") ? pathname : "/popular");
+
     sendRequest(
-      { url: "https://api.themoviedb.org/3/search/movie" },
+      { url: url },
       applyMovies
     );
   }, [sendRequest]);
@@ -46,7 +50,7 @@ const Home = () => {
   const filterMoviesByGenre = (genre) => {
     let filteredGenres = allMovies;
 
-    if (genre === "none") filteredGenres = allMovies;
+    if (genre === "all") filteredGenres = allMovies;
     else
       filteredGenres = allMovies.filter(
         (f) => f.genre_ids.includes(genre) === true

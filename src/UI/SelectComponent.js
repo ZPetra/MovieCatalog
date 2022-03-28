@@ -24,7 +24,7 @@ const SelectComponent = (props) => {
           label={props.filterName}
           onChange={handleChange}
         >
-          <MenuItem key={"none"} value={"none"}><em>None</em></MenuItem>
+          <MenuItem key={"all"} value={"all"}><em>All</em></MenuItem>
           {props.items &&
             props.items.map((item) => {
               return <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>;

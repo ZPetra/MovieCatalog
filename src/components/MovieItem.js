@@ -3,20 +3,28 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
+import ModalDialog from "../UI/ModalDialog";
+import { useState } from "react";
 
 const MovieItem = (props) => {
   const item = props.item;
   const imageStartPath = "https://image.tmdb.org/t/p/w500";
   let navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
-  const showMovieDetails = () => {
+  /* const showMovieDetails = () => {
     navigate(`/${props.item.id}`);
+  }; */
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   return (
     <ImageListItem
       key={imageStartPath + item.poster_path}
-      onClick={showMovieDetails}
+      //onClick={showMovieDetails}
+      onClick={handleClickOpen}
     >
       <img
         src={`${
@@ -37,6 +45,8 @@ const MovieItem = (props) => {
           </IconButton>
         }
       />
+
+      <ModalDialog open={open}></ModalDialog>
     </ImageListItem>
   );
 };
