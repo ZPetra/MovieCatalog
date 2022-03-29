@@ -12,42 +12,44 @@ const MovieItem = (props) => {
   let navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  /* const showMovieDetails = () => {
-    navigate(`/${props.item.id}`);
-  }; */
-
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  return (
-    <ImageListItem
-      key={imageStartPath + item.poster_path}
-      //onClick={showMovieDetails}
-      onClick={handleClickOpen}
-    >
-      <img
-        src={`${
-          imageStartPath + item.poster_path
-        }?w=50%&fit=crop&auto=format&dpr=2 2x`}
-        alt={item.title}
-        loading="lazy"
-      />
-      <ImageListItemBar
-        title={item.title}
-        subtitle={item.overview.substring(0, 500)}
-        actionIcon={
-          <IconButton
-            sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-            aria-label={`info about ${item.title}`}
-          >
-            <InfoIcon />
-          </IconButton>
-        }
-      />
+  const handleClickClose = () => {
+    setOpen(false);
+  };
 
-      <ModalDialog open={open}></ModalDialog>
-    </ImageListItem>
+  return (
+    <div>
+      <ImageListItem
+        key={imageStartPath + item.poster_path}
+        //onClick={showMovieDetails}
+        onClick={handleClickOpen}
+      >
+        <img
+          src={`${
+            imageStartPath + item.poster_path
+          }?w=50%&fit=crop&auto=format&dpr=2 2x`}
+          alt={item.title}
+          loading="lazy"
+        />
+        <ImageListItemBar
+          title={item.title}
+          subtitle={item.overview.substring(0, 500)}
+          actionIcon={
+            <IconButton
+              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+              aria-label={`info about ${item.title}`}
+            >
+              <InfoIcon />
+            </IconButton>
+          }
+        />
+      </ImageListItem>
+
+      <ModalDialog open={open} onClose={handleClickClose} movieId={item.id}></ModalDialog>
+    </div>
   );
 };
 
