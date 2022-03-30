@@ -15,8 +15,7 @@ const useHttp = () => {
         const newUrl =
           requestConfig.url +
           "?api_key=9ae8bfdb347b67a5ffe47c15b82cc7ce&query=String" +
-          "&page=" +
-          i;
+          "&page=" + i;
         try {
           const response = await fetch(newUrl, {
             method: requestConfig.method ? requestConfig.method : "GET",

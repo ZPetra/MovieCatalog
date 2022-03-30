@@ -17,10 +17,9 @@ const Home = () => {
 
   const applyMovies = (data) => {
     let list = [];
-    for(let i=0; i<data.length; i++)
-    {
+    for (let i = 0; i < data.length; i++) {
       list = list.concat(data[i].results);
-    };
+    }
 
     setAllMovies(list);
     setFilteredMovies(list);
@@ -34,13 +33,11 @@ const Home = () => {
   useEffect(() => {
     const pathname = window.location.pathname;
 
-    let url = "https://api.themoviedb.org/3/movie" + ((pathname !== "/") ? pathname : "/popular");
+    let url =
+      "https://api.themoviedb.org/3/movie" +
+      (pathname !== "/" ? pathname : "/popular");
 
-    sendRequest(
-      { url: url },
-      10,
-      applyMovies
-    );
+    sendRequest({ url: url }, 10, applyMovies);
   }, [sendRequest]);
 
   useEffect(() => {
@@ -74,11 +71,12 @@ const Home = () => {
 
     switch (event.target.value) {
       case "adults":
-        filteredMoviesTemp = filteredMovies.filter((m) => m.adult === true);
+        //this is because it filters adult movies when adult is false
+        filteredMoviesTemp = filteredMovies.filter((m) => m.adult === false);
         setAudienceMovies(filteredMoviesTemp);
         return;
       case "kids":
-        filteredMoviesTemp = filteredMovies.filter((m) => m.adult === false);
+        filteredMoviesTemp = filteredMovies.filter((m) => m.adult === true);
         setAudienceMovies(filteredMoviesTemp);
         return;
       default:
@@ -93,7 +91,6 @@ const Home = () => {
         filterMovies={filterMovies}
         placeholder={"Search Movie"}
       ></SearchComponent>
-
       <div className={classes.gridContainer}>
         <div className={classes.gridItem}>
           <SelectComponent
@@ -105,7 +102,7 @@ const Home = () => {
           ></SelectComponent>
         </div>
 
-        <div className={classes.gridItem}>
+        {/*  <div className={classes.gridItem}>
           <RadioButtonGroup
             selectAudience={selectAudience}
             defaultValue={"all"}
@@ -113,13 +110,22 @@ const Home = () => {
             radioList={[
               { value: "adults", label: "Adults" },
               { value: "kids", label: "Kids" },
-              { value: "all", label: "all" },
+              { value: "all", label: "All" },
             ]}
           ></RadioButtonGroup>
-        </div>
+        </div> */}
       </div>
-
-      <MovieList movies={audienceMovies} search={search}></MovieList>
+      {/*       {isLoading && <div>Loading movies...</div>}
+      {!isLoading && ( */}
+      <div className={classes.movies}>
+        <MovieList
+          movies={audienceMovies}
+          search={search}
+          loading={isLoading}
+        ></MovieList>
+      </div>
+      {/*       )}
+       */}{" "}
     </div>
   );
 };
