@@ -11,7 +11,7 @@ const Home = () => {
   const [allMovies, setAllMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [audienceMovies, setAudienceMovies] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState([]);
   const [search, setSearch] = useState("");
   const { isLoading, error, sendRequest } = useHttp();
 
@@ -55,18 +55,23 @@ const Home = () => {
   const filterMoviesByGenre = (genre) => {
     let filteredGenres = allMovies;
 
-    if (genre === "all") filteredGenres = allMovies;
+    if (genre.length === 0) filteredGenres = allMovies;
     else
-      filteredGenres = allMovies.filter(
+    {
+/*       filteredGenres = allMovies.filter(
         (f) => f.genre_ids.includes(genre) === true
-      );
+      ); */
+
+      filteredGenres = allMovies.filter(
+        (f) => f.genre_ids.every(g=> genre.includes(g)));
+    }
 
     setFilter(genre);
     setFilteredMovies(filteredGenres);
     setAudienceMovies(filteredGenres);
   };
 
-  const selectAudience = (event) => {
+ /*  const selectAudience = (event) => {
     let filteredMoviesTemp = [];
 
     switch (event.target.value) {
@@ -83,7 +88,7 @@ const Home = () => {
         setAudienceMovies(filteredMovies);
         return;
     }
-  };
+  }; */
 
   return (
     <div>
