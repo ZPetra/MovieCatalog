@@ -49,6 +49,7 @@ const MovieDetails = () => {
   useEffect(() => {
     sendRequest(
       { url: `https://api.themoviedb.org/3/movie/${movieId}` },
+      1,
       applyMovie
     );
   }, [sendRequest, movieId]);

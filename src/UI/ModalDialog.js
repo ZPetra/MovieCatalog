@@ -58,6 +58,7 @@ export default function ModalDialog(props) {
   useEffect(() => {
     sendRequest(
       { url: `https://api.themoviedb.org/3/movie/${props.movieId}` },
+      1,
       applyMovie
     );
   }, [sendRequest, props.movieId]);

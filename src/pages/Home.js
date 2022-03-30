@@ -16,13 +16,19 @@ const Home = () => {
   const { isLoading, error, sendRequest } = useHttp();
 
   const applyMovies = (data) => {
-    setAllMovies(data.results);
-    setFilteredMovies(data.results);
-    setAudienceMovies(data.results);
+    let list = [];
+    for(let i=0; i<data.length; i++)
+    {
+      list = list.concat(data[i].results);
+    };
+
+    setAllMovies(list);
+    setFilteredMovies(list);
+    setAudienceMovies(list);
   };
 
   const applyGenres = (data) => {
-    setGenres(data.genres);
+    setGenres(data[0].genres);
   };
 
   useEffect(() => {
@@ -32,6 +38,7 @@ const Home = () => {
 
     sendRequest(
       { url: url },
+      10,
       applyMovies
     );
   }, [sendRequest]);
@@ -39,6 +46,7 @@ const Home = () => {
   useEffect(() => {
     sendRequest(
       { url: "https://api.themoviedb.org/3/genre/movie/list" },
+      1,
       applyGenres
     );
   }, [sendRequest]);

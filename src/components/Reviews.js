@@ -25,7 +25,7 @@ const Reviews = (props) => {
     sendRequest(
       {
         url: "https://api.themoviedb.org/3/movie/" + props.movieId + "/reviews",
-      },
+      }, 1,
       applyReviews
     );
   }, [sendRequest, props.movieId]);
