@@ -52,7 +52,7 @@ export default function ModalDialog(props) {
   };
 
   const applyMovie = (data) => {
-    setMovie(data);
+    setMovie(data[0]);
   };
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function ModalDialog(props) {
                         sx={{ bgcolor: blue[500] }}
                         aria-label="moviecatalog"
                       >
-                        {movie.title.substring(0, 1).toUpperCase()}
+                        {movie.title && movie.title.substring(0, 1).toUpperCase()}
                       </Avatar>
                     }
                     action={
