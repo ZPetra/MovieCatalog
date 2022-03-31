@@ -18,7 +18,7 @@ const Reviews = (props) => {
   const imageStartPath = "https://image.tmdb.org/t/p/w500";
 
   const applyReviews = (data) => {
-    setReviews(data.results);
+    setReviews(data[0].results);
   };
 
   useEffect(() => {

@@ -52,7 +52,7 @@ export default function ModalDialog(props) {
   };
 
   const applyMovie = (data) => {
-    setMovie(data);
+    setMovie(data[0]);
   };
 
   useEffect(() => {
