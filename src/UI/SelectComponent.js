@@ -22,6 +22,7 @@ const SelectComponent = (props) => {
   const [selection, setSelection] = React.useState([]);
 
   const handleChange = (event) => {
+
     setSelection(event.target.value);
 
     props.filterMovies(event.target.value);
@@ -38,27 +39,24 @@ const SelectComponent = (props) => {
           id="simple-select"
           multiple
           value={selection}
-          //label={props.filterName}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selection &&
                 selected.map((element) => (
-                  <Chip key={element} label={element} />
+                  <Chip key={element.id} label={element.name} />
                 ))}
             </Box>
           )}
           MenuProps={MenuProps}
         >
-          {/* <MenuItem key={"all"} value={"all"}><em>All</em></MenuItem> */}
           {props.items &&
             props.items.map((item) => {
               return (
                 <MenuItem
                   key={item.id}
-                  //value={{ id: item.id, name: item.name }}
-                  value={item.id}
+                  value={item}
                 >
                   {item.name}
                 </MenuItem>

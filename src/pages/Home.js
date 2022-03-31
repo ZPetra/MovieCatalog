@@ -58,25 +58,13 @@ const Home = () => {
     if (genre.length === 0) filteredGenres = allMovies;
     else
     {
-/*       filteredGenres = allMovies.filter(
-        (f) => f.genre_ids.includes(genre) === true
-      ); */
-
-      //const isSubset = (array1, array2) => array2.every(element => array1.includes(element));
-
-
-      //filteredGenres = allMovies.filter(movie => movie.genre_ids.every(g => genre.includes(g)));
-
       filteredGenres = allMovies.filter(
-        p => {
+        movie => {
           return genre.every(
-            tag => p.genre_ids.includes(tag)
+            g => movie.genre_ids.includes(g.id)
           );
         }
       );
-
-    /*   filteredGenres = allMovies.filter(
-        (f) => f.genre_ids.every(g=> genre.includes(g))); */
     }
 
     setFilter(genre);
